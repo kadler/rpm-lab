@@ -266,10 +266,10 @@ Or the bug has been fixed upstream, but only in a new major version and you don'
 
 In that case, we need to modify the existing source code to fix the problem and we can do that by generating and applying patches. RPM spec files support patch files very well and has lots of tools for making them as easy as possible to apply.
 
-First we need to get the patch. For now, let's just assume that we have generated the patch and stuck it here: https://gist.github.com/kadler/547bb36ddadb9bfec3ff9c16a164a148. We can download the patch and stick it in `~/rpmbuild/SOURCES`:
+First we need to get the patch. For now, let's just assume that we have generated the patch and stuck it here: https://github.com/kadler/rpm-lab/raw/master/libwordcount-mkshrlib-ibmi.patch. We can download the patch and stick it in `~/rpmbuild/SOURCES`:
 
 ```bash
-curl https://gist.github.com/kadler/547bb36ddadb9bfec3ff9c16a164a148 > ~/rpmbuild/SOURCES/libwordcount-mkshrlib-ibmi.patch
+curl https://github.com/kadler/rpm-lab/raw/master/libwordcount-mkshrlib-ibmi.patch > ~/rpmbuild/SOURCES/libwordcount-mkshrlib-ibmi.patch
 ```
 
 Now we can adjust our spec file to use the patch:
