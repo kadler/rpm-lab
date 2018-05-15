@@ -6,12 +6,12 @@ For this lab you will need to have a pretty good familiarity with using SSH and 
 
 As noted above, we will be editing files in the IFS. For the lab, you can use whatever means you are most comfortable with for this. `nano` is installed if you wish to run from within the terminal for everything. Otherwise, you can edit locally with your favorite text editor and use SFTP or similar to send the files. Again, this is something that you should already be comfortable with.
 
-## Step 1: Getting connected
+## Step 0: Getting connected
 
 [TODO] Need to figure out how we're doing the lab
 
 
-## Step 2: First steps
+## Step 1: First steps
 
 The first thing we need to do is create a spec file. The convention for the file name is `<package>.spec`. For the first part, we will just be making a dummy package, so create a file called `dummy.spec`. We will add the following contents to it:
 
@@ -55,7 +55,7 @@ Wrote: /home/yum/rpmbuild/SRPMS/dummy-1.0-0.src.rpm
 Wrote: /home/yum/rpmbuild/RPMS/ppc64/dummy-1.0-0.ibmi7.3.ppc64.rpm
 ```
 
-You have just built your first RPM package! You can query it it with `rpm -qp dummy-1.0-0.ibmi7.3.ppc64.rpm`. You can add additional options to find more info: `--info`, `--list`, `--requires`, and `--provides`.
+You have just built your first RPM package! You can query it it with `rpm -qp ~/rpmbuild/RPMS/ppc64/dummy-1.0-0.ibmi7.3.ppc64.rpm`. You can add additional options to find more info: `--info`, `--list`, `--requires`, and `--provides`.
 
 ## Step 2: Spec file walkthrough
 
