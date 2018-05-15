@@ -52,10 +52,10 @@ If all goes well, you should see output like the following:
 
 ```
 Wrote: /home/yum/rpmbuild/SRPMS/dummy-1.0-0.src.rpm
-Wrote: /home/yum/rpmbuild/RPMS/ppc64/dummy-1.0-0.ibmi7.1.ppc64.rpm
+Wrote: /home/yum/rpmbuild/RPMS/ppc64/dummy-1.0-0.ibmi7.3.ppc64.rpm
 ```
 
-You have just built your first RPM package! You can query it it with `rpm -qp dummy-1.0-0.ibmi7.1.ppc64.rpm`. You can add additional options to find more info: `--info`, `--list`, `--requires`, and `--provides`.
+You have just built your first RPM package! You can query it it with `rpm -qp dummy-1.0-0.ibmi7.3.ppc64.rpm`. You can add additional options to find more info: `--info`, `--list`, `--requires`, and `--provides`.
 
 ## Step 2: Spec file walkthrough
 
@@ -370,7 +370,7 @@ The last option is what we're going to do. Update your `%files` section to this:
 Now when you run your `rpmbuild` command, your resulting rpm should have files in it! You can check with the `-l` or `--list` option to `rpm -q`:
 
 ```shell
-rpm -qpl ~/rpmbuild/RPMS/ppc64/libwordcount-1.0-0.ibmi7.1.ppc64.rpm
+rpm -qpl ~/rpmbuild/RPMS/ppc64/libwordcount-1.0-0.ibmi7.3.ppc64.rpm
 /usr
 /usr/local
 /usr/local/bin
@@ -487,7 +487,7 @@ Now that our all our sections are referencing the macro paths defined by `rpmbui
 ```shell
 $ rpmbuild -ba ~/rpmbuild/SOURCES/libwordcount.spec --buildroot ~/rpmbuild/BUILDROOT/br --define '_prefix /opt/freeware'
 #...
-$ rpm -qp -l ~/rpmbuild/RPMS/ppc64/libwordcount-1.0-0.ibmi7.1.ppc64.rpm
+$ rpm -qp -l ~/rpmbuild/RPMS/ppc64/libwordcount-1.0-0.ibmi7.3.ppc64.rpm
 /opt/freeware/bin/butter
 /opt/freeware/include/wordcount.h
 /opt/freeware/lib/libwordcount.so
@@ -527,7 +527,7 @@ yum install zlib-devel
 Now that the `zlib` development package is installed, the `rpmbuild` command should succeed again. If we look at the rpm requirements, we should see that the rpm now depends on `libz.so.1(shr_64.o)`:
 
 ```shell
-$ rpm -qp --requires /home/yum/rpmbuild/RPMS/ppc64/libwordcount-1.0-0.ibmi7.1.ppc64.rpmlib:/QOpenSys/pkgs/lib/libgcc_s.so.1(shr_64.o)(ppc64)
+$ rpm -qp --requires /home/yum/rpmbuild/RPMS/ppc64/libwordcount-1.0-0.ibmi7.3.ppc64.rpmlib:/QOpenSys/pkgs/lib/libgcc_s.so.1(shr_64.o)(ppc64)
 lib:/QOpenSys/pkgs/lib/libz.so.1(shr_64.o)(ppc64)
 lib:/QOpenSys/usr/lib/libc.a(shr_64.o)(ppc64)
 rpmlib(CompressedFileNames) <= 3.0.4-1
@@ -626,9 +626,9 @@ After running `rpmbuild` you should see 3 rpms were generated now:
 
 ```
 Wrote: /home/yum/rpmbuild/SRPMS/libwordcount-1.0-0.src.rpm
-Wrote: /home/yum/rpmbuild/RPMS/ppc64/libwordcount-1.0-0.ibmi7.1.ppc64.rpm
-Wrote: /home/yum/rpmbuild/RPMS/ppc64/libwordcount-devel-1.0-0.ibmi7.1.ppc64.rpm
-Wrote: /home/yum/rpmbuild/RPMS/ppc64/wordcount-samples-1.0-0.ibmi7.1.ppc64.rpm
+Wrote: /home/yum/rpmbuild/RPMS/ppc64/libwordcount-1.0-0.ibmi7.3.ppc64.rpm
+Wrote: /home/yum/rpmbuild/RPMS/ppc64/libwordcount-devel-1.0-0.ibmi7.3.ppc64.rpm
+Wrote: /home/yum/rpmbuild/RPMS/ppc64/wordcount-samples-1.0-0.ibmi7.3.ppc64.rpm
 ```
 
 ## Step 13: Final pieces
