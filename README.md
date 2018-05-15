@@ -35,7 +35,7 @@ if it wasn't just a dummy package it would. :)
 Now we have a basic spec file which we can build with rpmbuild, but first we need to set up a set of directories where rpmbuild will find things. Run the following command to create the directory structure:
 
 ```shell
-mkdir -p ~/rpmbuild/{BUILD, BUILDROOT, RPMS, SRPMS, SOURCES}
+mkdir -p ~/rpmbuild/{BUILD,BUILDROOT,RPMS,SRPMS,SOURCES}
 ```
 
 You can now copy your spec file in to `~/rpmbuild/SOURCES` and run rpmbuild:
@@ -151,7 +151,7 @@ You may have noticed various words prefixed with `%`: `%description`, `%files`, 
 When we set the `Name` and `Version` tags in the spec header, RPM uses these values to automatically define two macros: `%name` and `%version`. Let's use these to adjust our download URL:
 
 ```specfile
-Source: https://github.com/kadler/libwordcount/releases/download/%{version}/%{name}-%{version}.tar.gz 
+Source: https://github.com/kadler/%{name}/releases/download/%{version}/wordcount-%{version}.tar.gz
 ```
 
 ## Step 5: Unpacking
@@ -420,7 +420,7 @@ In addition to that, `rpmbuild` defines two make macros: `%make_build` and `%mak
 
 ```
 
-If you rebuild your rpm, you should now see the files are under `/QOpenSys/pkgs`:
+If you rebuild the rpm, when you run the `rpm -qpl` command from before, you should now see the files are listed under `/QOpenSys/pkgs` instead of `/usr/local`:
 
 ```
 /QOpenSys
