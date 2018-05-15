@@ -639,7 +639,7 @@ Our package is pretty much done, but there's still one thing we could improve. O
 First, run word.py to generate a test file with lots of "butter" mixed in with random data, then let's compress a copy of it:
 
 ```shell
-$ ./word.py butter 300 > ~/rpmbuild/SOURCES/butter.txt
+$ ~/rpmbuild/BUILD/wordcount-1.0/word.py butter 300 > ~/rpmbuild/SOURCES/butter.txt
 $ gzip -c ~/rpmbuild/SOURCES/butter.txt > ~/rpmbuild/SOURCES/butter.txt.gz
 ```
 
