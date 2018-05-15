@@ -137,7 +137,7 @@ While you can give a URL in the `Source` tag, `rpmbuild` will not automatically 
 ```shell
 pushd ~/rpmbuild/SOURCES
 
-curl -O https://github.com/kadler/libwordcount/releases/download/1.0/wordcount-1.0.tar.gz 
+curl -OL https://github.com/kadler/libwordcount/releases/download/1.0/wordcount-1.0.tar.gz 
 
 popd
 ```
@@ -269,7 +269,7 @@ In that case, we need to modify the existing source code to fix the problem and 
 First we need to get the patch. For now, let's just assume that we have generated the patch and stuck it here: https://github.com/kadler/rpm-lab/raw/master/libwordcount-mkshrlib-ibmi.patch. We can download the patch and stick it in `~/rpmbuild/SOURCES`:
 
 ```bash
-curl https://github.com/kadler/rpm-lab/raw/master/libwordcount-mkshrlib-ibmi.patch > ~/rpmbuild/SOURCES/libwordcount-mkshrlib-ibmi.patch
+curl -L https://github.com/kadler/rpm-lab/raw/master/libwordcount-mkshrlib-ibmi.patch > ~/rpmbuild/SOURCES/libwordcount-mkshrlib-ibmi.patch
 ```
 
 Now we can adjust our spec file to use the patch:
