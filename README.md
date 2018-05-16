@@ -8,8 +8,13 @@ As noted above, we will be editing files in the IFS. For the lab, you can use wh
 
 ## Step 0: Getting connected
 
-[TODO] Need to figure out how we're doing the lab
+This lab will be conducted using SSH to log in to the lab system. No access will be provided via 5250. You have been provided the hostname, username, and password to connect. The lab machines will have PuTTY installed on the desktop or you can use your own device, so long as it has an SSH terminal.
 
+You can also do the lab on your own IBM i system, so long as you have the Yum bootstrap and the following packages installed on it:
+
+```
+yum install curl rpm-devel rpm-build gcc-aix gzip make-gnu tar-gnu patch-gnu coreutils-gnu
+```
 
 ## Step 1: First steps
 
