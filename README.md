@@ -704,6 +704,8 @@ Here we use the `%dir` macro to ensure the directory is owned by our package. Si
 Now run `rpmbuild` for the last time. Everything should build successfully. You can install the rpms and play around with the butter command:
 
 ```shell
+yum insall ~/rpmbuild/RPMS/ppc64/wordcount-samples-1.0-0.ibmi7.3.ppc64.rpm ~/rpmbuild/RPMS/ppc64/libwordcount-1.0-0.ibmi7.3.ppc64.rpm
+
 $ butter /QOpenSys/pkgs/share/wordcount/butter.txt
 $ butter /QOpenSys/pkgs/share/wordcount/butter.txt.gz
 ```
