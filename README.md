@@ -12,7 +12,7 @@ This lab will be conducted using SSH to log in to the lab system. No access will
 
 You can also do the lab on your own IBM i system, so long as you have the Yum bootstrap and the following packages installed on it:
 
-```
+```shell
 yum install curl rpm-devel rpm-build gcc-aix gzip make-gnu tar-gnu patch-gnu coreutils-gnu
 ```
 
@@ -55,7 +55,7 @@ rpmbuild -ba ~/rpmbuild/SOURCES/dummy.spec --buildroot ~/rpmbuild/BUILDROOT/br
 
 If all goes well, you should see output like the following:
 
-```
+```text
 Wrote: /home/yum/rpmbuild/SRPMS/dummy-1.0-0.src.rpm
 Wrote: /home/yum/rpmbuild/RPMS/ppc64/dummy-1.0-0.ibmi7.3.ppc64.rpm
 ```
@@ -64,7 +64,7 @@ You have just built your first RPM package! You can query it it with `rpm -qp ~/
 
 ## Step 2: Spec file walkthrough
 
-In the previous step, we built a dummy package to make sure things were set up and get our feet wet. From now on, we'll build a real package. For this we'll be building a relatively simple open source project called `libwordcount`, which as its name might suggest is a library for counting words in text. You can find it here: https://github.com/kadler/libwordcount
+In the previous step, we built a dummy package to make sure things were set up and get our feet wet. From now on, we'll build a real package. For this we'll be building a relatively simple open source project called `libwordcount`, which as its name might suggest is a library for counting words in text. You can find it here: [https://github.com/kadler/libwordcount](https://github.com/kadler/libwordcount)
 
 Let's make a new spec file for `libwordcount` called `libwordcount.spec` in `~/rpmbuild/SOURCES`:
 
@@ -133,7 +133,7 @@ rpmbuild -ba ~/rpmbuild/SOURCES/libwordcount.spec --buildroot ~/rpmbuild/BUILDRO
 
 Oops, an error:
 
-```
+```text
     Bad file: /home/yum/rpmbuild/SOURCES/wordcount-1.0.tar.gz: No such file or directory
 ```
 
@@ -165,16 +165,16 @@ The first step to building any package is almost always to unpack the source. RP
 
 ```specfile
 Name: libwordcount
-Version: 1.0 
+Version: 1.0
 Release: 0
-License: MIT 
+License: MIT
 Summary: Word count library
 Url: https://github.com/kadler/libwordcount
 
 Source: https://github.com/kadler/libwordcount/releases/download/1.0/wordcount-1.0.tar.gz
 
 %description
-libwordcount is a library to count the occurrences of a given word in chunks of text, even occurrences split across chunks. This allows you to process large text files in a streaming fashion without having to read the whole thing in to memory. 
+libwordcount is a library to count the occurrences of a given word in chunks of text, even occurrences split across chunks. This allows you to process large text files in a streaming fashion without having to read the whole thing in to memory.
 
 A sample application is included, which counts the word "butter".
 
@@ -186,7 +186,7 @@ A sample application is included, which counts the word "butter".
 
 The `%prep` section is where you do "preporatory" work before the build happens: Unpacking tar files, copying individual source files listed in the spec to the build directory, applying patches, etc - the `%prep` section gets turned in to a shell script, so you can put any shell commands directly in it. To extract the source, though, we can use a special macro: `%setup`. Here we use the `-q` option to do so "quietly". Let's run our `rpmbuild` command again.
 
-```
+```text
 Executing(%prep): /bin/sh -e /QOpenSys/var/tmp/rpm-tmp.--a2qa
 + umask 022
 + cd /home/yum/rpmbuild/BUILD
@@ -237,13 +237,12 @@ make
 
 The `%build` section should include all the steps needed to actually build the RPM, but not actually run the install (that is done later).
 
-
 The configure step should run and succeed. In this example, the configure step is pretty quick, but in many open source packages it can take quite a long time even on very fast hardware due to all the checks that it does. You should see a failure during `make`, however:
 
-```
+```text
 + make
 gcc -g -O2 -fPIC   -c -o wordcount.o wordcount.c
-gcc -shared -o wordcount.so wordcount.o  
+gcc -shared -o wordcount.so wordcount.o
 ./mkshrlib.sh os400 wordcount.so libwordcount.so 1
 Unknown platform: os400
 ```
@@ -264,14 +263,14 @@ Now if you run the `rpmbuild`, it should succeed.
 
 ## Step 7: Patching
 
-Sometimes a package doesn't work, even on AIX so lying that we're AIX doesn't help. 
+Sometimes a package doesn't work, even on AIX so lying that we're AIX doesn't help.
 Or maybe PASE behaves slightly differently than AIX...
-Or there's a bug which hasn't been fixed upstream, yet... 
+Or there's a bug which hasn't been fixed upstream, yet...
 Or the bug has been fixed upstream, but only in a new major version and you don't want to break compatibility...
 
 In that case, we need to modify the existing source code to fix the problem and we can do that by generating and applying patches. RPM spec files support patch files very well and has lots of tools for making them as easy as possible to apply.
 
-First we need to get the patch. For now, let's just assume that we have generated the patch and stuck it here: https://github.com/kadler/rpm-lab/raw/master/libwordcount-mkshrlib-ibmi.patch. We can download the patch and stick it in `~/rpmbuild/SOURCES`:
+First we need to get the patch. For now, let's just assume that we have generated the patch and stuck it here: [https://github.com/kadler/rpm-lab/raw/master/libwordcount-mkshrlib-ibmi.patch](https://github.com/kadler/rpm-lab/raw/master/libwordcount-mkshrlib-ibmi.patch). We can download the patch and stick it in `~/rpmbuild/SOURCES`:
 
 ```bash
 pushd ~/rpmbuild/SOURCES
@@ -285,9 +284,9 @@ Now we can adjust our spec file to use the patch:
 
 ```specfile
 Name: libwordcount
-Version: 1.0 
+Version: 1.0
 Release: 0
-License: MIT 
+License: MIT
 Summary: Word count library
 Url: https://github.com/kadler/libwordcount
 
@@ -296,7 +295,7 @@ Source: https://github.com/kadler/libwordcount/releases/download/1.0/wordcount-1
 Patch0: libwordcount-mkshrlib-ibmi.patch
 
 %description
-libwordcount is a library to count the occurrences of a given word in chunks of text, even occurrences split across chunks. This allows you to process large text files in a streaming fashion without having to read the whole thing in to memory. 
+libwordcount is a library to count the occurrences of a given word in chunks of text, even occurrences split across chunks. This allows you to process large text files in a streaming fashion without having to read the whole thing in to memory.
 
 A sample application is included, which counts the word "butter".
 
@@ -326,16 +325,15 @@ Just listing the patch file in the header will only cause `rpmbuild` to ensure t
 
 With this patch, `mkshrlib.sh` now supports building shared libraries on IBM i, so we do not need to lie anymore. Let's run the `rpmbuild` and see what happens.
 
-
 If you look closely, you can see the patch get applied:
 
-```
+```text
 + echo Patch #0 (libwordcount-mkshrlib-ibmi.patch):
 Patch #0 (libwordcount-mkshrlib-ibmi.patch):
 + /QOpenSys/pkgs/bin/patch --no-backup-if-mismatch -p0 --fuzz=0
 + 0< /home/yum/rpmbuild/SOURCES/libwordcount-mkshrlib-ibmi.patch
 patching file mkshrlib.sh
-+ exit 
++ exit
 ```
 
 ### Step 8: Packaging files
@@ -362,7 +360,7 @@ However, if we run this it will install into the final destionation and not our 
 make DESTDIR=%{buildroot} install
 ```
 
-Now the `%install` section will install the built software in to our buildroot, but we still have to package it by listing files in our `%files` section. The question is: What files are actually installed? For this, there are a couple methods. 
+Now the `%install` section will install the built software in to our buildroot, but we still have to package it by listing files in our `%files` section. The question is: What files are actually installed? For this, there are a couple methods.
 
 - You could pre-build the software outside of rpmbuild and generate a list (`find` is really handy for this).
 
@@ -432,7 +430,7 @@ In addition to that, `rpmbuild` defines two make macros: `%make_build` and `%mak
 
 If you rebuild the rpm, when you run the `rpm -qpl` command from before, you should now see the files are listed under `/QOpenSys/pkgs` instead of `/usr/local`:
 
-```
+```text
 /QOpenSys
 /QOpenSys/pkgs
 /QOpenSys/pkgs/bin
@@ -457,7 +455,6 @@ Currently we're just telling rpm to ship everything under `/`, which includes sh
 ```
 
 Now we've only listed the files that our package installs, but we can do even better using more macros. Instead of hard-coding the paths, we can use macros so that the paths listed in the `%files` section always matches the paths given by the `%configure` macro:
-
 
 ```specfile
 %files
@@ -522,7 +519,7 @@ You may have noticed that `libwordcount` can build against `zlib`, either by rea
 
 Now run your `rpmbuild` and see what happens. You should encounter an error:
 
-```
+```text
 checking for library containing deflate... no
 configure: error: cannot find zlib library
 error: Bad exit status from /QOpenSys/var/tmp/rpm-tmp.-6g5qb (%build)
@@ -559,7 +556,7 @@ BuildRequires: zlib-devel
 
 Now if someone attempts to build the spec file and zlib-devel is not installed, they will immediately get an error telling them to install it:
 
-```
+```text
 error: Failed build dependencies:
         zlib-devel is needed by libwordcount-1.0-0.ppc64
 ```
@@ -634,7 +631,7 @@ You may have also noticed the `Requires` tag. This is because there is no binary
 
 After running `rpmbuild` you should see 3 rpms were generated now:
 
-```
+```text
 Wrote: /home/yum/rpmbuild/SRPMS/libwordcount-1.0-0.src.rpm
 Wrote: /home/yum/rpmbuild/RPMS/ppc64/libwordcount-1.0-0.ibmi7.3.ppc64.rpm
 Wrote: /home/yum/rpmbuild/RPMS/ppc64/libwordcount-devel-1.0-0.ibmi7.3.ppc64.rpm
@@ -648,8 +645,8 @@ Our package is pretty much done, but there's still one thing we could improve. O
 First, run word.py to generate a test file with lots of "butter" mixed in with random data, then let's compress a copy of it:
 
 ```shell
-$ ~/rpmbuild/BUILD/wordcount-1.0/word.py butter 300 > ~/rpmbuild/SOURCES/butter.txt
-$ gzip -c ~/rpmbuild/SOURCES/butter.txt > ~/rpmbuild/SOURCES/butter.txt.gz
+~/rpmbuild/BUILD/wordcount-1.0/word.py butter 300 > ~/rpmbuild/SOURCES/butter.txt
+gzip -c ~/rpmbuild/SOURCES/butter.txt > ~/rpmbuild/SOURCES/butter.txt.gz
 ```
 
 Now, to ship them we need to add them as sources to our package with additional `Source` tags:
@@ -721,7 +718,7 @@ Both of the above commands should say they found the 300 instances of "butter" i
 
 There are many resources on the web for learning how to package rpms. Here are a couple really good ones:
 
-- http://rpm-guide.readthedocs.io/en/latest/
-- https://fedoraproject.org/wiki/Packaging:Guidelines
+- [http://rpm-guide.readthedocs.io/en/latest/](http://rpm-guide.readthedocs.io/en/latest/)
+- [https://fedoraproject.org/wiki/Packaging:Guidelines](https://fedoraproject.org/wiki/Packaging:Guidelines)
 
-In addition, IBM will be providing IBM i-specific rpm packaging documentation and more in the future. Check this link for more once it is available: http://ibm.biz/ibmi-rpm-guide
+In addition, IBM will be providing IBM i-specific rpm packaging documentation and more in the future. Check this link for more once it is available: [http://ibm.biz/ibmi-rpm-guide](http://ibm.biz/ibmi-rpm-guide)
