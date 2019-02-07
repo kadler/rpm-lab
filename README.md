@@ -696,7 +696,7 @@ Finally we can add these files to our `%files` section:
 
 %dir %{_datadir}/wordcount
 %{_datadir}/wordcount/butter.txt
-%{_datadir}/wordcount/butter.txt
+%{_datadir}/wordcount/butter.txt.gz
 ```
 
 Here we use the `%dir` macro to ensure the directory is owned by our package. Since this package owns the whole directory, we can even take a shortcut and just list the directory itself, which will package all of its contents and subdirectories as well:
