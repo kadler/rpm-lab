@@ -696,7 +696,7 @@ Finally we can add these files to our `%files` section:
 
 %dir %{_datadir}/wordcount
 %{_datadir}/wordcount/butter.txt
-%{_datadir}/wordcount/butter.txt
+%{_datadir}/wordcount/butter.txt.gz
 ```
 
 Here we use the `%dir` macro to ensure the directory is owned by our package. Since this package owns the whole directory, we can even take a shortcut and just list the directory itself, which will package all of its contents and subdirectories as well:
@@ -712,7 +712,7 @@ Here we use the `%dir` macro to ensure the directory is owned by our package. Si
 Now run `rpmbuild` for the last time. Everything should build successfully. You can install the rpms and play around with the butter command:
 
 ```shell
-yum insall ~/rpmbuild/RPMS/ppc64/wordcount-samples-1.0-0.ibmi7.3.ppc64.rpm ~/rpmbuild/RPMS/ppc64/libwordcount-1.0-0.ibmi7.3.ppc64.rpm
+yum install ~/rpmbuild/RPMS/ppc64/wordcount-samples-1.0-0.ibmi7.3.ppc64.rpm ~/rpmbuild/RPMS/ppc64/libwordcount-1.0-0.ibmi7.3.ppc64.rpm
 
 $ butter /QOpenSys/pkgs/share/wordcount/butter.txt
 $ butter /QOpenSys/pkgs/share/wordcount/butter.txt.gz
